@@ -9,16 +9,12 @@ module.exports = async (struct) => {
         destinations.push({
             exp: MachinaModels.getUint32(data, 0x04 + (i * DESTINATION_DATA_LENGTH)),
             favorResult: MachinaModels.getUint32(data, 0x08 + (i * DESTINATION_DATA_LENGTH)),
-
-            unknown0: data[0x09 + (i * DESTINATION_DATA_LENGTH)],
-            unknown1: MachinaModels.getInt16(data, 0x0A + (i * DESTINATION_DATA_LENGTH)),
-
             sectorId: data[0x0C + (i * DESTINATION_DATA_LENGTH)],
 
             unknown2: data[0x0D + (i * DESTINATION_DATA_LENGTH)],
 
             // Seems to indicate the rating
-            unknown3: MachinaModels.getInt16(data, 0x0E + (i * DESTINATION_DATA_LENGTH)),
+            unknown3: MachinaModels.getUint16(data, 0x0E + (i * DESTINATION_DATA_LENGTH)),
 
             loot1ItemId: MachinaModels.getUint32(data, 0x10 + (i * DESTINATION_DATA_LENGTH)),
             loot2ItemId: MachinaModels.getUint32(data, 0x14 + (i * DESTINATION_DATA_LENGTH)),
@@ -37,6 +33,9 @@ module.exports = async (struct) => {
             // 10=HQ, 11=NQ item that could possible be HQ, 12, 13 are item type that cannot HQ
             loot1ItemDiscoveryDescription: MachinaModels.getUint32(data, 0x2C + (i * DESTINATION_DATA_LENGTH)),
             loot2ItemDiscoveryDescription: MachinaModels.getUint32(data, 0x30 + (i * DESTINATION_DATA_LENGTH)),
+
+            loot1IsHq: data[0x58 + (i * DESTINATION_DATA_LENGTH)] === 1,
+            loot2IsHq: data[0x59 + (i * DESTINATION_DATA_LENGTH)] === 1,
 
             unknown4: data[0x3A + (i * DESTINATION_DATA_LENGTH)],
         });
